@@ -20,7 +20,7 @@ const Home = () => {
     { name: "About", href: "#about" },
     { name: "How It Works", href: "#how-it-works" },
     { name: "Login", href: "/login" },
-    { name: "Donate", href: "#donate" },
+    { name: "Donate", href: "/transaction" },
   ]
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setForm({ ...form, [e.target.name]: e.target.value })
