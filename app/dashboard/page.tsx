@@ -14,10 +14,10 @@ export default function DashboardPage() {
   
   // Hardcoded user data
   const userData = {
-    name: "Rahul Sharma",
-    email: "rahul@example.com",
+    name: "Kunal Singh",
+    email: "Kunal@example.com",
     role: "Food Provider",
-    joinedDate: "January 2023",
+    joinedDate: "January 2025",
     donationsCount: 24,
     mealsProvided: 560,
     impactPoints: 1250

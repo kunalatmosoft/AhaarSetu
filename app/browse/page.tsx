@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Slider } from "@/components/ui/slider"
-import { Filter, Search, Utensils } from "lucide-react"
+import { Filter, Search, Utensils, MapPin } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import EventCard from "@/components/event-card"
@@ -16,14 +16,14 @@ export default function BrowsePage() {
   const [filterDistance, setFilterDistance] = useState([5]);
   const [filterServings, setFilterServings] = useState([1]);
   const [showFilters, setShowFilters] = useState(false);
-  
+
   // Filter events based on search term
-  const filteredEvents = foodEvents.filter(event => 
+  const filteredEvents = foodEvents.filter(event =>
     event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     event.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
     event.location.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -33,20 +33,20 @@ export default function BrowsePage() {
             <Image src="/logo.jpg" alt="Logo" width={40} height={40} className="rounded-full" />
             <span className="text-xl font-bold text-yellow-600">AhaarSetu</span>
           </Link>
-          
+
           <div className="hidden md:flex gap-6 text-gray-700 font-medium">
             <Link href="/" className="hover:text-yellow-600 transition">Home</Link>
             <Link href="/about" className="hover:text-yellow-600 transition">About</Link>
             <Link href="/browse" className="text-yellow-600 font-semibold">Browse</Link>
             <Link href="/dashboard" className="hover:text-yellow-600 transition">Dashboard</Link>
           </div>
-          
+
           <Link href="/login">
             <Button variant="outline">Login</Button>
           </Link>
         </div>
       </header>
-      
+
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="text-center mb-8">
@@ -55,7 +55,7 @@ export default function BrowsePage() {
             Browse and reserve food donations near you. Help reduce food waste while feeding those in need.
           </p>
         </div>
-        
+
         {/* Search and Filters */}
         <div className="mb-8">
           <div className="flex flex-col md:flex-row gap-4">
@@ -68,22 +68,32 @@ export default function BrowsePage() {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            
-            <Button 
-              variant="outline" 
+
+            <Button
+              variant="outline"
               className="flex items-center gap-2"
               onClick={() => setShowFilters(!showFilters)}
             >
               <Filter className="h-4 w-4" />
               Filters
             </Button>
-            
+
+            <Link href="https://atmomaps.netlify.app/Dashboard" target="_blank">
+              <Button
+                variant="outline"
+                className="flex items-center gap-2"
+              >
+                <MapPin className="h-4 w-4" />
+                Locations
+              </Button>
+            </Link>
+
             <Button className="bg-yellow-500 hover:bg-yellow-600">
               <Search className="h-4 w-4 mr-2" />
               Search
             </Button>
           </div>
-          
+
           {showFilters && (
             <Card className="mt-4">
               <CardContent className="p-6">
@@ -105,7 +115,7 @@ export default function BrowsePage() {
                       </div>
                     </div>
                   </div>
-                  
+
                   <div>
                     <h3 className="font-medium mb-3">Minimum Servings</h3>
                     <div className="space-y-4">
@@ -123,7 +133,7 @@ export default function BrowsePage() {
                       </div>
                     </div>
                   </div>
-                  
+
                   <div>
                     <h3 className="font-medium mb-3">Food Type</h3>
                     <div className="grid grid-cols-2 gap-2">
@@ -140,7 +150,7 @@ export default function BrowsePage() {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="flex justify-end mt-6">
                   <Button variant="outline" className="mr-2">Reset</Button>
                   <Button className="bg-yellow-500 hover:bg-yellow-600">Apply Filters</Button>
@@ -149,7 +159,7 @@ export default function BrowsePage() {
             </Card>
           )}
         </div>
-        
+
         {/* Food Events Tabs */}
         <Tabs defaultValue="all">
           <TabsList className="mb-6">
@@ -158,7 +168,7 @@ export default function BrowsePage() {
             <TabsTrigger value="today">Today</TabsTrigger>
             <TabsTrigger value="vegetarian">Vegetarian</TabsTrigger>
           </TabsList>
-          
+
           <TabsContent value="all" className="space-y-6">
             {filteredEvents.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -184,48 +194,10 @@ export default function BrowsePage() {
               </div>
             )}
           </TabsContent>
-          
+
           <TabsContent value="nearby" className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {foodEvents.filter(event => event.distance < 3)
-                  .map((event) => (
-                    <EventCard
-                      key={event.id}
-                      id={event.id}
-                      title={event.title}
-                      description={event.description}
-                      servings={event.servings}
-                      location={event.location}
-                      time={event.time}
-                      image={event.image}
-                      provider={event.provider}
-                    />
-                  ))}
-            </div>
-          </TabsContent>
-
-          <TabsContent value="today" className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {foodEvents.filter(event => event.time === 'Today')
-                  .map((event) => (
-                    <EventCard
-                      key={event.id}
-                      id={event.id}
-                      title={event.title}
-                      description={event.description}
-                      servings={event.servings}
-                      location={event.location}
-                      time={event.time}
-                      image={event.image}
-                      provider={event.provider}
-                    />
-                  ))}
-            </div>
-          </TabsContent>
-
-          <TabsContent value="vegetarian" className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {foodEvents.filter(event => event.foodType === 'Vegetarian')
                 .map((event) => (
                   <EventCard
                     key={event.id}
@@ -239,11 +211,49 @@ export default function BrowsePage() {
                     provider={event.provider}
                   />
                 ))}
-          </div>
-        </TabsContent>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="today" className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {foodEvents.filter(event => event.time === 'Today')
+                .map((event) => (
+                  <EventCard
+                    key={event.id}
+                    id={event.id}
+                    title={event.title}
+                    description={event.description}
+                    servings={event.servings}
+                    location={event.location}
+                    time={event.time}
+                    image={event.image}
+                    provider={event.provider}
+                  />
+                ))}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="vegetarian" className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {foodEvents.filter(event => event.foodType === 'Vegetarian')
+                .map((event) => (
+                  <EventCard
+                    key={event.id}
+                    id={event.id}
+                    title={event.title}
+                    description={event.description}
+                    servings={event.servings}
+                    location={event.location}
+                    time={event.time}
+                    image={event.image}
+                    provider={event.provider}
+                  />
+                ))}
+            </div>
+          </TabsContent>
         </Tabs>
       </main>
-      
+
       {/* Footer */}
       <footer className="bg-white py-6 text-center text-gray-500 border-t">
         <p>&copy; 2023 AhaarSetu. All rights reserved.</p>
