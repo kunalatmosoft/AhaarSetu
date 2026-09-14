@@ -1,12 +1,11 @@
+# AhaarSetu Introductions
+
 - 1. Creating .dockerignore
 - 2. creating Dockerfile
 - 3. creating docker-compose.yml
 - 4. docker build -t  name .
 - 5. docker run -p 3000:3000 name  ( this would start the server And you can explore your site)
 
-
-
-Absolutely! Here's a **comprehensive guide to essential and advanced Docker commands**, grouped by purpose — ideal for exploring Docker's full potential in real-world projects like your **Next.js Docker setup** or any containerized application.
 
 ---
 
