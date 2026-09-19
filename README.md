@@ -1,5 +1,7 @@
 # AhaarSetu Introductions
 
+this is fully functional and working
+
 - 1. Creating .dockerignore
 - 2. creating Dockerfile
 - 3. creating docker-compose.yml
